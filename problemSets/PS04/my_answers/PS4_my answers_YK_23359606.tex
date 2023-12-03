@@ -1,0 +1,473 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{graphicx,textcomp}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage[reqno]{amsmath}
+\usepackage{amsthm}
+\usepackage{fancyvrb}
+\usepackage{amssymb,enumerate}
+\usepackage[all]{xy}
+\usepackage{endnotes}
+\usepackage{lscape}
+\newtheorem{com}{Comment}
+\usepackage{float}
+\usepackage{hyperref}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\usepackage[compact]{titlesec}
+\usepackage{dcolumn}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{multirow}
+\usepackage{xcolor}
+\newcolumntype{.}{D{.}{.}{-1}}
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+\definecolor{light-gray}{gray}{0.65}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+\lstset{style=mystyle}
+\newcommand{\Sref}[1]{Section~\ref{#1}}
+\newtheorem{hyp}{Hypothesis}
+
+
+\title{Applied Stats - Problem Set 4}
+\author{Yana Konshyna}
+
+\begin{document}
+	\maketitle
+	\section*{Instructions}
+	\begin{itemize}
+		\item Please show your work! You may lose points by simply writing in the answer. If the problem requires you to execute commands in \texttt{R}, please include the code you used to get your answers. Please also include the \texttt{.R} file that contains your code. If you are not sure if work needs to be shown for a particular problem, please ask.
+		\item Your homework should be submitted electronically on GitHub.
+		\item This problem set is due before 23:59 on Sunday December 3, 2023. No late assignments will be accepted.
+	\end{itemize}
+
+
+
+	\vspace{.5cm}
+\section*{Question 1: Economics}
+\vspace{.25cm}
+\noindent 	
+In this question, use the \texttt{prestige} dataset in the \texttt{car} library. First, run the following commands:
+
+\begin{verbatim}
+install.packages(car)
+library(car)
+data(Prestige)
+help(Prestige)
+\end{verbatim} 
+
+
+\noindent We would like to study whether individuals with higher levels of income have more prestigious jobs. Moreover, we would like to study whether professionals have more prestigious jobs than blue and white collar workers.
+
+\newpage
+\begin{enumerate}
+	
+	\item [(a)]
+	Create a new variable \texttt{professional} by recoding the variable \texttt{type} so that professionals are coded as $1$, and blue and white collar workers are coded as $0$ (Hint: \texttt{ifelse}).
+	
+	\noindent \textbf After loading \texttt{Prestige} dataset into the working environment, I used summary() method to display summary statistics of each variable in the dataset. \vspace{0.5cm}
+		
+		\lstinputlisting[language=R, firstline=4, lastline=10]{PS4_my answers_YK_23359606.R}  
+	\vspace{.25cm} 
+		\noindent \textbf{Output: }
+		\begin{footnotesize}
+		\begin{verbatim}
+education          income          women           prestige         census       type    
+Min.   : 6.380   Min.   :  611   Min.   : 0.000   Min.   :14.80   Min.   :1113   bc  :44   
+1st Qu.: 8.445   1st Qu.: 4106   1st Qu.: 3.592   1st Qu.:35.23   1st Qu.:3120   prof:31   
+Median :10.540   Median : 5930   Median :13.600   Median :43.60   Median :5135   wc  :23   
+Mean   :10.738   Mean   : 6798   Mean   :28.979   Mean   :46.83   Mean   :5402   NA's: 4   
+3rd Qu.:12.648   3rd Qu.: 8187   3rd Qu.:52.203   3rd Qu.:59.27   3rd Qu.:8312             
+Max.   :15.970   Max.   :25879   Max.   :97.510   Max.   :87.20   Max.   :9517            
+			
+		\end{verbatim}  
+	\end{footnotesize}
+	
+	\noindent \textbf  Creating a new variable \texttt{professional} by using ifelse function to recoding the variable type. The professionals ("prof") are coded as 1, and blue and white collar workers ("bc", "wc") are coded as 0. Printing first 6 row of the table by using head() function. \vspace{0.5cm}
+	
+
+	\lstinputlisting[language=R, firstline=13, lastline=15]{PS4_my answers_YK_23359606.R}  
+	\vspace{.25cm}
+	
+	\noindent \textbf{Output: }
+	\begin{footnotesize}
+		\begin{verbatim}
+                    education income women prestige census type   professional
+gov.administrators      13.11  12351 11.16     68.8   1113 prof            1
+general.managers        12.26  25879  4.02     69.1   1130 prof            1
+accountants             12.77   9271 15.70     63.4   1171 prof            1
+purchasing.officers     11.42   8865  9.11     56.8   1175 prof            1
+chemists                14.62   8403 11.68     73.5   2111 prof            1
+physicists              15.64  11030  5.13     77.6   2113 prof            1
+			
+		\end{verbatim}  
+	\end{footnotesize}
+	
+	\vspace{1 cm}
+	
+	\item [(b)]
+	Run a linear model with \texttt{prestige} as an outcome and \texttt{income}, \texttt{professional}, and the interaction of the two as predictors (Note: this is a continuous $\times$ dummy interaction.)
+	
+		\noindent \textbf Executing the regression model in which the \texttt{prestige} variable is explained by the independent variables such as \texttt{income} and \texttt{professional}. The variable \texttt{income:professional} is the interaction of the two as predictors. Then I investigate the estimated coefficients of the model using summary(). \vspace{0.5cm}
+	
+
+	\lstinputlisting[language=R, firstline=19, lastline=20]{PS4_my answers_YK_23359606.R}  
+	\vspace{.25cm}
+	
+	\noindent \textbf{Output: }
+	\begin{footnotesize}
+		\begin{verbatim}
+Residuals:    Min      1Q  Median      3Q     Max 
+            -14.852  -5.332  -1.272   4.658  29.932 
+Coefficients:                       
+                        Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          21.1422589  2.8044261   7.539 2.93e-11 ***
+income                0.0031709  0.0004993   6.351 7.55e-09 ***
+professionals        37.7812800  4.2482744   8.893 4.14e-14 ***
+income:professionals -0.0023257  0.0005675  -4.098 8.83e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 8.012 on 94 degrees of freedom  
+(4 observations deleted due to missingness)
+Multiple R-squared:  0.7872,	Adjusted R-squared:  0.7804 
+F-statistic: 115.9 on 3 and 94 DF,  p-value: < 2.2e-16
+			
+		\end{verbatim}  
+	\end{footnotesize}
+	
+	
+	\noindent \textbf{Conclusion:} All estimated coefficients are statistically differentiable from zero at the  $\alpha=0.05$ level because the p-value $<$ 0.05.
+		\vspace{1 cm}
+
+	\item [(c)]
+	Write the prediction equation based on the result.
+	
+	\noindent \textbf The formula of prediction equation is: \vspace{0.5cm}
+			
+
+$$ \hat{y} = \hat{\beta_0} + \hat{\beta_1} \times  \text{income} +  \hat{\beta_2} \times  \text{professional} + 
+\hat{\beta_3} \times  \text{income} \times \text{professional}\\ $$		
+
+	
+	\noindent \textbf Getting the coefficients for writing the prediction equation. 
+	\vspace{0.5cm}
+	
+
+	\lstinputlisting[language=R, firstline=23, lastline=24]{PS4_my answers_YK_23359606.R}  
+	\vspace{.25cm}
+	
+		\noindent \textbf{Output: }
+\begin{verbatim}
+(Intercept)              income        professional income:professional        
+21.142258854         0.003170909        37.781279955        -0.002325709 
+\end{verbatim}  
+\vspace{.25cm}
+
+\noindent \textbf Writing the prediction equation. 
+\vspace{0.5cm}		
+
+
+\lstinputlisting[language=R, firstline=26, lastline=28]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+	
+	\noindent \textbf{Output: }
+	\begin{verbatim}
+Prediction Equation:
+prestige = 21.14226 + 0.003170909 * income + 37.78128 * professionals + 
+( -0.002325709 ) * income:professionals
+		
+	\end{verbatim}  
+	\vspace{0.5 cm}
+	
+
+	\item [(d)]
+	Interpret the coefficient for \texttt{income}.
+		
+	\noindent  There is a positive and statistically reliable relationship between the income and the prestige, such that an one unit increase in income, on average, is associated with the increase of 0.003170909 units in prestige score, under controlling for the effects of all other predictor variables in the model.
+	\vspace{1 cm}
+
+	\item [(e)]
+	Interpret the coefficient for \texttt{professional}.
+	
+	\noindent There is a positive and statistically reliable relationship between the professional and prestige, such that in comparisson to non-professional, an one unit increase in professional, on average, is associated with the increase of 37.78128 units in prestige score, under controlling for the effects of all other predictor variables in the model.
+	\vspace{1 cm}
+	
+
+	\item [(f)]
+	What is the effect of a \$1,000 increase in income on prestige score for professional occupations? In other words, we are interested in the marginal effect of income when the variable \texttt{professional} takes the value of $1$. Calculate the change in $\hat{y}$ associated with a \$1,000 increase in income based on your answer for (c).\vspace{0.5cm}
+	
+		\noindent \textbf Assigning \$0 to variable \texttt{income} and 1 to variable \texttt{professional}, then calculating  $\hat{y}$ using the prediction equation. 
+	\vspace{0.5cm}
+	
+
+	\lstinputlisting[language=R, firstline=43, lastline=47]{PS4_my answers_YK_23359606.R}  
+	\vspace{.25cm}
+	
+	\noindent \textbf{Output: }
+	\begin{verbatim}
+58.92354
+ 
+	\end{verbatim}  
+	\vspace{.25cm}
+	
+		\noindent \textbf Assigning \$1000 to variable \texttt{income}, the variable \texttt{professional} doesn't change. Calculating  $\hat{y}\_new\_income$ using the prediction equation. 
+	\vspace{0.5cm}
+	
+
+	\lstinputlisting[language=R, firstline=48, lastline=51]{PS4_my answers_YK_23359606.R}  
+	\vspace{.25cm}
+	
+	\noindent \textbf{Output: }
+	\begin{verbatim}
+59.76874
+		
+	\end{verbatim}  
+	\vspace{.25cm}
+	
+		\noindent \textbf Calculating marginal effect between $\hat{y}\_new\_income$ and $\hat{y}$.
+	\vspace{0.5cm}
+
+	\lstinputlisting[language=R, firstline=52, lastline=53]{PS4_my answers_YK_23359606.R}  
+	\vspace{.25cm}
+	
+	\noindent \textbf{Output: }
+	\begin{verbatim}
+0.8452
+		
+	\end{verbatim}  
+	\vspace{.25cm}
+	
+	
+	\item [(g)]
+	What is the effect of changing one's occupations from non-professional to professional when her income is \$6,000? We are interested in the marginal effect of professional jobs when the variable \texttt{income} takes the value of $6,000$. Calculate the change in $\hat{y}$ based on your answer for (c).	\vspace{0.5cm}
+	
+		\noindent \textbf Assigning to variable \texttt{income} the amount of \$6000, and 0 to variable \texttt{professional}, then calculating  $\hat{y}\_non\_prof$ using the prediction equation. 
+\vspace{0.5cm}
+
+
+\lstinputlisting[language=R, firstline=61, lastline=65]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+
+\noindent \textbf{Output: }
+\begin{verbatim}
+40.16771
+	
+\end{verbatim}  
+\vspace{.25cm}
+
+\noindent \textbf Assigning 1 to variable \texttt{professional}, the variable \texttt{income} doesn't change. Calculating  $\hat{y}\_prof$ using the prediction equation. 
+\vspace{0.5cm}
+
+
+\lstinputlisting[language=R, firstline=66, lastline=69]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+
+\noindent \textbf{Output: }
+\begin{verbatim}
+63.99474
+	
+\end{verbatim}  
+\vspace{.25cm}
+
+\noindent \textbf Calculating marginal effect between $\hat{y}\_prof$ and $\hat{y}\_non\_prof$.
+\vspace{0.5cm}
+
+
+\lstinputlisting[language=R, firstline=70, lastline=71]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+
+\noindent \textbf{Output: }
+\begin{verbatim}
+23.82703
+	
+\end{verbatim}  
+\vspace{.25cm}
+
+	
+\end{enumerate}
+
+\newpage
+
+\section*{Question 2: Political Science}
+\vspace{.25cm}
+\noindent 	Researchers are interested in learning the effect of all of those yard signs on voting preferences.\footnote{Donald P. Green, Jonathan	S. Krasno, Alexander Coppock, Benjamin D. Farrer,	Brandon Lenoir, Joshua N. Zingher. 2016. ``The effects of lawn signs on vote outcomes: Results from four randomized field experiments.'' Electoral Studies 41: 143-150. } Working with a campaign in Fairfax County, Virginia, 131 precincts were randomly divided into a treatment and control group. In 30 precincts, signs were posted around the precinct that read, ``For Sale: Terry McAuliffe. Don't Sellout Virgina on November 5.'' \\
+
+Below is the result of a regression with two variables and a constant.  The dependent variable is the proportion of the vote that went to McAuliff's opponent Ken Cuccinelli. The first variable indicates whether a precinct was randomly assigned to have the sign against McAuliffe posted. The second variable indicates
+a precinct that was adjacent to a precinct in the treatment group (since people in those precincts might be exposed to the signs).  \\
+
+\vspace{.5cm}
+\begin{table}[!htbp]
+	\centering 
+	\textbf{Impact of lawn signs on vote share}\\
+	\begin{tabular}{@{\extracolsep{5pt}}lccc} 
+		\\[-1.8ex] 
+		\hline \\[-1.8ex]
+		Precinct assigned lawn signs  (n=30)  & 0.042\\
+		& (0.016) \\
+		Precinct adjacent to lawn signs (n=76) & 0.042 \\
+		&  (0.013) \\
+		Constant  & 0.302\\
+		& (0.011)
+		\\
+		\hline \\
+	\end{tabular}\\
+	\footnotesize{\textit{Notes:} $R^2$=0.094, N=131}
+\end{table}
+
+\vspace{.5cm}
+\begin{enumerate}
+	\item [(a)] Use the results from a linear regression to determine whether having these yard signs in a precinct affects vote share (e.g., conduct a hypothesis test with $\alpha = .05$).
+	
+	\noindent \textit{Null hypothesis}: $\text{H}_0$: Having these yard signs in a precinct doesn't affect vote share.
+	
+	\noindent \textit{Alternative hypothesis}: $\text{H}_A$: Having these yard signs in a precinct affects vote share
+		
+	$$H_0: \beta_1 = 0$$
+	$$H_A: \beta_1 \neq 0$$
+	
+\vspace{0.5cm}
+
+\noindent \textbf 1) Calculating test-statistic using formula $ t = \frac{\hat{\beta}_1 - 0}{se_{\hat{\beta}_1}}$
+
+\lstinputlisting[language=R, firstline=81, lastline=84]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+
+\noindent \textbf{Output: }
+\begin{verbatim}
+2.625
+	
+\end{verbatim}  
+\vspace{.25cm}
+
+\noindent \textbf 2) Calculating degrees of freedom using formula $ df = N-k $, where \text{N} - total number of observations, \text{k} - the number of parameters estimated in the model, included the intercept and the predictior variables.   
+\vspace{0.5cm}
+
+
+\lstinputlisting[language=R, firstline=87, lastline=90]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+
+\noindent \textbf{Output: }
+\begin{verbatim}
+128
+	
+\end{verbatim}  
+\vspace{.25cm}
+
+\noindent \textbf 3) Calculating P-value
+\vspace{0.5cm}
+
+
+\lstinputlisting[language=R, firstline=93, lastline=94]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+
+\noindent \textbf{Output: }
+\begin{verbatim}
+0.00972002
+	
+\end{verbatim}  
+\vspace{.25cm}
+
+	\noindent \textbf{Interpretation:} The estimated coefficient is statistically differentiable from zero at the $\alpha=0.05$ level because the p-value $<$ 0.05 ($\approx $0.0097), so we can reject the null hypothesis that having these yard signs in a precinct doesn't affect vote share. \vspace{.5cm}
+
+	\item [(b)]  Use the results to determine whether being
+	next to precincts with these yard signs affects vote
+	share (e.g., conduct a hypothesis test with $\alpha = .05$).
+	
+	\noindent \textit{Null hypothesis}: $\text{H}_0$: Being next to precincts with these yard signs doesn't affect vote share.
+
+\noindent \textit{Alternative hypothesis}: $\text{H}_A$: Being next to precincts with these yard signs affects vote share.
+
+$$H_0: \beta_2 = 0$$
+$$H_A: \beta_2 \neq 0$$
+
+\vspace{0.5cm}
+
+\noindent \textbf 1) Calculating test-statistic using formula $ t = \frac{\hat{\beta}_2 - 0}{se_{\hat{\beta}_2}}$
+
+\lstinputlisting[language=R, firstline=102, lastline=105]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+
+\noindent \textbf{Output: }
+\begin{verbatim}
+3.230769
+	
+\end{verbatim}  
+\vspace{.25cm}
+
+\noindent \textbf 2) Calculating degrees of freedom using formula $ df = N-k $, where \text{N} - total number of observations, \text{k} - the number of parameters estimated in the model, included the intercept and the predictior variables.
+\vspace{0.5cm}
+
+
+\lstinputlisting[language=R, firstline=108, lastline=111]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+
+\noindent \textbf{Output: }
+\begin{verbatim}
+	128
+	
+\end{verbatim}  
+\vspace{.25cm}
+
+\noindent \textbf 3) Calculating P-value
+\vspace{0.5cm}
+
+
+\lstinputlisting[language=R, firstline=114, lastline=115]{PS4_my answers_YK_23359606.R}  
+\vspace{.25cm}
+
+\noindent \textbf{Output: }
+\begin{verbatim}
+0.00156946
+	
+\end{verbatim}  
+\vspace{.25cm}
+
+\noindent \textbf{Interpretation:} The estimated coefficient is statistically differentiable from zero at the $\alpha=0.05$ level because the p-value $<$ 0.05 ($\approx $0.0016), so we can reject the null hypothesis that being next to precincts with these yard signs doesn't affect vote share. \vspace{.5cm}
+		
+
+	\item [(c)] Interpret the coefficient for the constant term substantively.
+	\vspace{0.5 cm}
+	
+	\noindent In regression analysis, the constant term is the estimated \textit{y}-intercept that represents the expected value of the dependent variable when all independent variables are equal to zero. Thus, constant term $ \beta_0 $ = 0.302 represents the estimated average proportion of the vote that went to McAuliff’s opponent Ken Cuccinelli in the absence of lawn signs assigned and adjacent to.
+	\vspace{0.5 cm}
+	
+	\item [(d)] Evaluate the model fit for this regression.  What does this	tell us about the importance of yard signs versus other factors that are not modeled?
+	
+	\noindent The correlation r and its square describe the strength of association between y and the set of explanatory variables acting together as predictors in the model. $ R^{2} $ falls between 0 and 1. The larger the value of $ R^{2} $, the better the set of explanatory variables $ (\text{x}_1, . . . , \text{x}_p) $ collectively predicts \textit{y} (Agresti, 2018, section 11.2 Multiple Correlation and $ R^{2} $ ). Our $ R^{2} $ = 0.094, it is small, thus, we could suggest that the included variables do not provide the better explaination of the proportion of the vote that went to McAuliff’s opponent Ken Cuccinelli. The other factors that are not modeled could be significant.
+	
+\end{enumerate}  
+
+
+\end{document}
